@@ -7,6 +7,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import path from 'path';
 import routes from './routes';
+import cors from 'cors';
 
 class App{
 
@@ -25,6 +26,8 @@ class App{
     }
 
     middlewares(){
+        //CORS sempre primeiro
+        this.server.use(cors()); //API Pública
 
         this.server.use(
             '/files',
