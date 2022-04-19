@@ -73,7 +73,7 @@ class HouseController{
 
         //Se o usuario localizado estiver diferente do usuário armazenado na casa, parar operação.
         if (String(user._id) !== String(house.user)){
-            return res.status(401).json({error: 'Não autorizado.'});
+            return res.status(401).json({ error: 'Não autorizado.' });
         }
 
         await House.findByIdAndDelete({ _id: house_id });
