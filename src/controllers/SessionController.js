@@ -1,28 +1,27 @@
-//Métodos: index, show, update, store, destroy
 /*
-INDEX: Listagem de sessões
-SHOW: Listar única sessão
-UPDATE: Atualizar sessão
-STORE: Criar nova sessão
-DESTROY: Deletar sessão
+//Métodos:
+    index: Listagem de sessões
+    store: Criar uma nova sessão (fazer login)
+    show: Listar única sessão
+    update: Atualizar uma sessão
+    destroy: Deletar uma sessão
 */
 
 import User from '../models/User';
 
-class SessionControler{
-    async store(req, res) {
+class SessionController{
+
+    async store(req, res){
         const { email } = req.body;
 
-        let user = User.findOne({ email });
-
-        if (!user) {
+        let user = await User.findOne({ email });
+        if (!user){
             user = await User.create({ email });
         }
 
         return res.json(user);
     }
 
-
 }
 
-export default new SessionControler();
+export default new SessionController();

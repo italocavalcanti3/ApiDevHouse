@@ -1,4 +1,4 @@
-import { Schema, model } from 'mongoose';
+import { model, Schema} from 'mongoose';
 
 const HouseSchema = new Schema({
     thumbnail: String,
@@ -7,8 +7,9 @@ const HouseSchema = new Schema({
     location: String,
     status: Boolean,
     user: {
+        //Referenciando ao ID do usuário
         type: Schema.Types.ObjectId,
-        ref: 'User'
+        ref: 'User',
     }
 });
 
