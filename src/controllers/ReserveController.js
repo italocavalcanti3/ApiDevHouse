@@ -1,3 +1,12 @@
+/*
+//Métodos:
+    index: Listagem de sessões
+    store: Criar uma nova sessão (fazer login)
+    show: Listar única sessão
+    update: Atualizar uma sessão
+    destroy: Deletar uma sessão
+*/
+
 import Reserve from '../models/Reserve';
 import House from '../models/House';
 import User from '../models/User';
@@ -37,6 +46,31 @@ class ReserveController{
         .exec();
 
         return res.json(populateReserve);
+    }
+
+    async index(req, res){
+        const { user_id } = req.headers;
+        const reserves = await Reserve.find({ user: user_id })
+        .populate('house')
+        .exec();
+
+        return res.json(reserves);
+    }
+    
+    async destroy(req, res){
+        const { user_id } = req.headers;
+        const { reserve_id } = req.body;
+
+        const user = await User.findById(user_id);
+        const reserve = await Reserve.findById(reserve_id);
+
+        if (String(user._id) !== String(reserve.user)){
+            return res.status(401).json({ message: 'Não autorizado.' });
+        }
+
+        await Reserve.findByIdAndDelete({ _id: reserve_id });
+
+        return res.send();
     }
 
 }

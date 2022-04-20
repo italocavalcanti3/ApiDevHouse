@@ -1,3 +1,12 @@
+/*
+//Métodos:
+    index: Listagem de sessões
+    store: Criar uma nova sessão (fazer login)
+    show: Listar única sessão
+    update: Atualizar uma sessão
+    destroy: Deletar uma sessão
+*/
+
 import House from '../models/House';
 import User from '../models/User';
 
