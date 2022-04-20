@@ -11,9 +11,15 @@ import Reserve from '../models/Reserve';
 import House from '../models/House';
 import User from '../models/User';
 
+import * as Yup from 'yup';
+
 class ReserveController{
 
     async store(req, res){
+        const schema = Yup.object().shape({
+            date: Yup.string().required(),
+        });
+
         const { user_id } = req.headers;
         const { house_id } = req.params;
         const { date } = req.body;
@@ -32,6 +38,10 @@ class ReserveController{
 
         if (String(user._id) === String(house.user)){
             return res.status(401).json({ message: "Reserva não permitida." });
+        }
+
+        if (!(await schema.isValid(req.body))){
+            return res.status(400).json({ message: "Falha na validação." });
         }
 
         const reserve = await Reserve.create({
